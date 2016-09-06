@@ -25,10 +25,6 @@ namespace NFCoreEx
         public abstract void RegisterClassCallBack(string strClassName, NFIObject.ClassEventHandler handler);
 
 		public abstract void RegisterEventCallBack(NFIDENTID self, int nEventID, NFIEvent.EventHandler handler, NFIDataList valueList);
-
-        public abstract void RemoveEventCallBack(NFIDENTID self, int nEventID, NFIEvent.EventHandler handler, NFIDataList valueList);
-
-        public abstract void DoEvent(NFIDENTID self, int nEventID, NFIDataList valueList);
         /////////////////////////////////////////////////////////////////
 
         public abstract NFIObject GetObject(NFIDENTID ident);

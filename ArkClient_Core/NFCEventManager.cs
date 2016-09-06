@@ -11,7 +11,7 @@ namespace NFCoreEx
 		public NFCEventManager(NFIDENTID self)
 		{
 			mSelf = self;
-			mhtEvent = new Hashtable();
+            mhtEvent = new Dictionary<int, NFIEvent>();
 		}
 
 		public override void RegisterCallback(int nEventID, NFIEvent.EventHandler handler, NFIDataList valueList)
@@ -26,20 +26,6 @@ namespace NFCoreEx
 
 		}
 
-        public override void RemoveCallback(int nEventID, NFIEvent.EventHandler handler, NFIDataList valueList)
-        {
-            if (!mhtEvent.ContainsKey(nEventID))
-            {
-                return;
-            }
-
-            NFIEvent identEvent = (NFIEvent)mhtEvent[nEventID];
-            if (null != identEvent)
-            {
-                identEvent.RemoveCallback(handler);
-            }
-        }
-
 		public override void DoEvent(int nEventID, NFIDataList valueList)
 		{
 			if (mhtEvent.ContainsKey(nEventID))
@@ -50,6 +36,6 @@ namespace NFCoreEx
 		}
 
 		NFIDENTID mSelf;
-		Hashtable mhtEvent;
+        Dictionary<int, NFIEvent> mhtEvent;
     }
 }

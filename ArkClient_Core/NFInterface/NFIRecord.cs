@@ -57,15 +57,6 @@ namespace NFCoreEx
         public abstract int FindString(int nCol, string value);
         public abstract int FindObject(int nCol, NFIDENTID value);
 
-        //public abstract int FindRow( int nRow );
-        public abstract NFIDataList FindListColValue(int nCol, NFIDataList var);
-
-        public abstract NFIDataList FindListInt(int nCol, Int64 value);
-        public abstract NFIDataList FindListFloat(int nCol, float value);
-        public abstract NFIDataList FindListDouble(int nCol, double value);
-        public abstract NFIDataList FindListString(int nCol, string value);
-        public abstract NFIDataList FindListObject(int nCol, NFIDENTID value);
-
         public abstract bool Remove(int nRow);
         public abstract bool Clear();
 

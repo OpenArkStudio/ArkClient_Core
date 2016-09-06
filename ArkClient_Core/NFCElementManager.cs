@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 
 namespace NFCoreEx
@@ -12,7 +13,7 @@ namespace NFCoreEx
     {
         public NFCElementManager()
         {
-            mhtObject = new Hashtable();
+            mhtObject = new Dictionary<string, NFIElement>();
         }
 
         #region Instance
@@ -29,15 +30,16 @@ namespace NFCoreEx
             }
         }
         #endregion
-        public override bool Load()
+        public override bool Load(String strConfigPath)
         {
-            mstrRootPath = "";
+            mstrRootPath = strConfigPath;
+            ClearInstanceElement();
 
-            Hashtable xTable = NFCLogicClassManager.Instance.GetElementList();
-            foreach (DictionaryEntry de in xTable)
+            NFCLogicClassManager.Instance.LoadFromConfig(mstrRootPath);
+            Dictionary<string, NFILogicClass> xTable = NFCLogicClassManager.Instance.GetElementList();
+            foreach (KeyValuePair<string, NFILogicClass> kv in xTable)
             {
-                NFILogicClass xLogicClass = (NFILogicClass)de.Value;
-                LoadInstanceElement(xLogicClass);
+                LoadInstanceElement(kv.Value);
             }
 
             return false;
@@ -124,36 +126,51 @@ namespace NFCoreEx
             return null;
         }
 
+        private void ClearInstanceElement()
+        {
+            mhtObject.Clear();
+        }
+
         private void LoadInstanceElement(NFILogicClass xLogicClass)
         {
             string strLogicPath = mstrRootPath;
             strLogicPath += xLogicClass.GetInstance();
 
             XmlDocument xmldoc = new XmlDocument();
-            //xmldoc.Load(strLogicPath);
-
             ///////////////////////////////////////////////////////////////////////////////////////
-            StreamReader cepherReader = new StreamReader(strLogicPath); ;
-            string strContent = cepherReader.ReadToEnd();
-            cepherReader.Close();
+            if (NFCLogicClassManager.Instance.GetCepher())
+            {
+                StreamReader cepherReader = new StreamReader(strLogicPath); ;
+                string strContent = cepherReader.ReadToEnd();
+                cepherReader.Close();
 
-            byte[] data = Convert.FromBase64String(strContent);
+                byte[] data = Convert.FromBase64String(strContent);
 
-            MemoryStream stream = new MemoryStream(data);
-            XmlReader x = XmlReader.Create(stream);
-            x.MoveToContent();
-            string res = x.ReadOuterXml();
+                MemoryStream stream = new MemoryStream(data);
+                XmlReader x = XmlReader.Create(stream);
+                x.MoveToContent();
+                string res = x.ReadOuterXml();
 
-            xmldoc.LoadXml(res);
-            ////////////////////////////////////////////////////////////////////////////////////////
+                xmldoc.LoadXml(res);
+            }
+            else
+            {
+                xmldoc.Load(strLogicPath);
+            }
+            /////////////////////////////////////////////////////////////////
 
             XmlNode xRoot = xmldoc.SelectSingleNode("XML");
 
             XmlNodeList xNodeList = xRoot.SelectNodes("Object");
             for (int i = 0; i < xNodeList.Count; ++i)
             {
+                //NFCLog.Instance.Log("Class:" + xLogicClass.GetName());
+
                 XmlNode xNodeClass = xNodeList.Item(i);
-                XmlAttribute strID = xNodeClass.Attributes["ID"];
+                XmlAttribute strID = xNodeClass.Attributes["Id"];
+
+                //NFCLog.Instance.Log("ClassID:" + strID.Value);
+
                 NFIElement xElement = GetElement(strID.Value);
                 if (null == xElement)
                 {
@@ -216,7 +233,7 @@ namespace NFCoreEx
         }
 
         /////////////////////////////////////////
-        private Hashtable mhtObject;
+        private Dictionary<string, NFIElement> mhtObject;
         private string mstrRootPath;
     }
 }

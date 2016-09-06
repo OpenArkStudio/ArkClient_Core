@@ -14,11 +14,6 @@ namespace NFCoreEx
             mArgValueList = valueList;
 		}
 
-        public override void RemoveCallback(NFIEvent.EventHandler handler)
-        {
-            mHandlerDel -= handler;
-        }
-
 		public override void RegisterCallback(NFIEvent.EventHandler handler)
 		{
 			mHandlerDel += handler;

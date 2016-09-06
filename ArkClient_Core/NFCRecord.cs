@@ -394,13 +394,13 @@ namespace NFCoreEx
 						return FindInt(nCol, var.IntVal(0));
 
 					case NFIDataList.VARIANT_TYPE.VTYPE_FLOAT:
-						return FindFloat(nCol, var.FloatVal(0));
+						return FindInt(nCol, var.IntVal(0));
 
 					case NFIDataList.VARIANT_TYPE.VTYPE_DOUBLE:
-						return FindDouble(nCol, var.DoubleVal(0));
+						return FindInt(nCol, var.IntVal(0));
 
 					case NFIDataList.VARIANT_TYPE.VTYPE_STRING:
-						return FindString(nCol, var.StringVal(0));
+						return FindInt(nCol, var.IntVal(0));
 
 					case NFIDataList.VARIANT_TYPE.VTYPE_OBJECT:
 						return FindObject(nCol, var.ObjectVal(0));
@@ -481,118 +481,6 @@ namespace NFCoreEx
             return -1;
         }
 
-        //public override int FindRow( int nRow );
-        public override NFIDataList FindListColValue(int nCol, NFIDataList var)
-        {
-            for (int i = 0; i < mhtRecordVec.Count; i++)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                switch (valueList.GetType(0))
-                {
-                    case NFIDataList.VARIANT_TYPE.VTYPE_INT:
-                        return FindListInt(nCol, var.IntVal(0));
-
-                    case NFIDataList.VARIANT_TYPE.VTYPE_FLOAT:
-                        return FindListFloat(nCol, var.FloatVal(0));
-
-                    case NFIDataList.VARIANT_TYPE.VTYPE_DOUBLE:
-                        return FindListDouble(nCol, var.DoubleVal(0));
-
-                    case NFIDataList.VARIANT_TYPE.VTYPE_STRING:
-                        return FindListString(nCol, var.StringVal(0));
-
-                    case NFIDataList.VARIANT_TYPE.VTYPE_OBJECT:
-                        return FindListObject(nCol, var.ObjectVal(0));
-
-                    default:
-                        break;
-                }
-            }
-
-
-            return null;
-        }
- 
-        public override NFIDataList FindListInt(int nCol, Int64 value)
-        {
-            NFIDataList xRowList = new NFCDataList();
-
-            foreach (int i in mhtRecordVec.Keys)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                if (valueList.IntVal(nCol) == value)
-                {
-                    xRowList.AddInt(i);
-                }
-            }
-
-            return xRowList;
-        }
-
-        public override NFIDataList FindListFloat(int nCol, float value)
-        {
-            NFIDataList xRowList = new NFCDataList();
-
-            foreach (int i in mhtRecordVec.Keys)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                if (valueList.FloatVal(nCol) == value)
-                {
-                    xRowList.AddInt(i);
-                }
-            }
-
-            return xRowList;
-        }
-
-        public override NFIDataList FindListDouble(int nCol, double value)
-        {
-            NFIDataList xRowList = new NFCDataList();
-
-            foreach (int i in mhtRecordVec.Keys)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                if (valueList.DoubleVal(nCol) == value)
-                {
-                    xRowList.AddInt(i);
-                }
-            }
-
-            return xRowList;
-        }
-
-        public override NFIDataList FindListString(int nCol, string value)
-        {
-            NFIDataList xRowList = new NFCDataList();
-
-            foreach (int i in mhtRecordVec.Keys)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                if (valueList.StringVal(nCol) == value)
-                {
-                    xRowList.AddInt(i);
-                }
-            }
-
-            return xRowList;
-        }
-
-        public override NFIDataList FindListObject(int nCol, NFIDENTID value)
-        {
-            NFIDataList xRowList = new NFCDataList();
-
-            foreach (int i in mhtRecordVec.Keys)
-            {
-                NFIDataList valueList = (NFIDataList)mhtRecordVec[i];
-                if (valueList.ObjectVal(nCol) == value)
-                {
-                    xRowList.AddInt(i);
-                }
-            }
-
-            return xRowList;
-        }
-
         public override bool Remove(int nRow)
         {
 			if (mhtRecordVec.Contains(nRow))
@@ -610,7 +498,18 @@ namespace NFCoreEx
 
         public override bool Clear()
         {
+            for (int i = 0; i < mhtUseState.Count; ++i )
+            {
+                if (IsUsed(i))
+                {
+                    Remove(i);
+
+                    mhtUseState[i] = 0;
+                }
+            }
+
 			mhtRecordVec.Clear();
+
             return true;
         }
 
