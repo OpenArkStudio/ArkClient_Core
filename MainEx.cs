@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 
 
-namespace NFCoreEx
+namespace AFCoreEx
 {
 	
     class MainEx
     {
-        static void HeartBeatEventHandler(NFIDENTID self, string strHeartBeat, float fTime, NFIDataList valueList)
+        static void HeartBeatEventHandler(AFIDENTID self, string strHeartBeat, float fTime, AFIDataList valueList)
         {
             Console.Write(self);
             Console.Write(" ");
@@ -19,7 +19,7 @@ namespace NFCoreEx
             Console.WriteLine(" ");
         }
 
-		static void OnRecordEventHandler(NFIDENTID self, string strRecordName, NFIRecord.eRecordOptype eType, int nRow, int nCol, NFIDataList oldVar, NFIDataList newVar)
+		static void OnRecordEventHandler(AFIDENTID self, string strRecordName, AFIRecord.eRecordOptype eType, int nRow, int nCol, AFIDataList oldVar, AFIDataList newVar)
 		{
             Console.Write(self);
             Console.Write(" ");
@@ -37,7 +37,7 @@ namespace NFCoreEx
             Console.WriteLine(" ");
 		}
 
-		static void OnPropertydHandler(NFIDENTID self, string strProperty, NFIDataList oldVar, NFIDataList newVar)
+		static void OnPropertydHandler(AFIDENTID self, string strProperty, AFIDataList oldVar, AFIDataList newVar)
 		{
             Console.Write(self);
             Console.Write(" ");
@@ -49,7 +49,7 @@ namespace NFCoreEx
             Console.WriteLine(" ");
 		}
 
-        static void OnClassHandler(NFIDENTID self, int nContainerID, int nGroupID, NFIObject.CLASS_EVENT_TYPE eType, string strClassName, string strConfigIndex)
+        static void OnClassHandler(AFIDENTID self, int nContainerID, int nGroupID, AFIObject.CLASS_EVENT_TYPE eType, string strClassName, string strConfigIndex)
         {
             Console.Write(self);
             Console.Write(" ");
@@ -63,11 +63,11 @@ namespace NFCoreEx
 
         public static void Main()
         {
-            NFIKernel kernel = new NFCKernel();
+            AFIKernel kernel = new AFCKernel();
 
-			Console.WriteLine("****************NFIDataList******************");
+			Console.WriteLine("****************AFIDataList******************");
 
-            NFIDataList var = new NFCDataList();
+            AFIDataList var = new AFCDataList();
 
 			for (int i = 0; i < 9; i +=3)
 			{
@@ -87,19 +87,19 @@ namespace NFCoreEx
 			}
 
 
-			Console.WriteLine("***************NFProperty*******************");
+			Console.WriteLine("***************AFProperty*******************");
 
-            NFIDENTID ident = new NFIDENTID(0, 1);
-            NFIObject gameObject = kernel.CreateObject(ident, 0, 0, "", "", new NFCDataList());
+            AFIDENTID ident = new AFIDENTID(0, 1);
+            AFIObject gameObject = kernel.CreateObject(ident, 0, 0, "", "", new AFCDataList());
 
-			NFIDataList valueProperty = new NFCDataList();
+			AFIDataList valueProperty = new AFCDataList();
 			valueProperty.AddInt(112221);
 			gameObject.GetPropertyManager().AddProperty("111", valueProperty);
 			Console.WriteLine(gameObject.QueryPropertyInt("111"));
 
-			Console.WriteLine("***************NFRecord*******************");
+			Console.WriteLine("***************AFRecord*******************");
 
-			NFIDataList valueRecord = new NFCDataList();
+			AFIDataList valueRecord = new AFCDataList();
 			valueRecord.AddInt(0);
 			valueRecord.AddFloat(0);
 			valueRecord.AddString("");
@@ -118,29 +118,29 @@ namespace NFCoreEx
 			Console.WriteLine(gameObject.QueryRecordObject("testRecord", 0, 3));
 
             Console.WriteLine(" ");
-            Console.WriteLine("***************PropertyNFEvent*******************");
+            Console.WriteLine("***************PropertyAFEvent*******************");
 
 			//挂属性回调，挂表回调
             kernel.RegisterPropertyCallback(ident, "111", OnPropertydHandler);
             kernel.SetPropertyInt(ident, "111", 2456);
 
             Console.WriteLine(" ");
-            Console.WriteLine("***************RecordNFEvent*******************");
+            Console.WriteLine("***************RecordAFEvent*******************");
 
             kernel.RegisterRecordCallback(ident, "testRecord", OnRecordEventHandler);
             kernel.SetRecordInt(ident, "testRecord", 0, 0, 1111111);
 
             Console.WriteLine(" ");
-            Console.WriteLine("***************ClassNFEvent*******************");
+            Console.WriteLine("***************ClassAFEvent*******************");
 
             kernel.RegisterClassCallBack("CLASSAAAAA", OnClassHandler);
-            kernel.CreateObject(new NFIDENTID(0, 2), 0, 0, "CLASSAAAAA", "CONFIGINDEX", new NFCDataList());
-            kernel.DestroyObject(new NFIDENTID(0, 2));
+            kernel.CreateObject(new AFIDENTID(0, 2), 0, 0, "CLASSAAAAA", "COAFIGINDEX", new AFCDataList());
+            kernel.DestroyObject(new AFIDENTID(0, 2));
 
 
             Console.WriteLine(" ");
-			Console.WriteLine("***************NFHeartBeat*******************");
-            kernel.AddHeartBeat(new NFIDENTID(0, 1), "TestHeartBeat", HeartBeatEventHandler, 5.0f, new NFCDataList());
+			Console.WriteLine("***************AFHeartBeat*******************");
+            kernel.AddHeartBeat(new AFIDENTID(0, 1), "TestHeartBeat", HeartBeatEventHandler, 5.0f, new AFCDataList());
 
             while (true)
             {
