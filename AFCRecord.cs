@@ -107,15 +107,15 @@ namespace AFCoreEx
 				AFIDataList valueList = (AFIDataList)mhtRecordVec[nRow];
 				if (valueList.GetType(nCol) == AFIDataList.VARIANT_TYPE.VTYPE_INT)
 				{
-					if (valueList.IntVal(nCol) != value)
+					if (valueList.Int64Val(nCol) != value)
 					{
 						AFCDataList oldValue = new AFCDataList();
-						oldValue.AddInt(valueList.IntVal(nCol));
+						oldValue.AddInt64(valueList.Int64Val(nCol));
 	
-						valueList.SetInt(nCol, value);
+						valueList.SetInt64(nCol, value);
 	
 						AFCDataList newValue = new AFCDataList();
-						newValue.AddInt(valueList.IntVal(nCol));
+						newValue.AddInt64(valueList.Int64Val(nCol));
 	                   
 	                    if (null != doHandleDel)
 	                    {
@@ -373,7 +373,7 @@ namespace AFCoreEx
 			AFIDataList valueList = QueryRow(nRow);
 			if (null != valueList)
 			{
-				return valueList.IntVal(nCol);
+				return valueList.Int64Val(nCol);
 			}
 
 			return 0;
@@ -443,16 +443,16 @@ namespace AFCoreEx
 				switch (valueList.GetType(0))
 				{
 					case AFIDataList.VARIANT_TYPE.VTYPE_INT:
-						return FindInt(nCol, var.IntVal(0));
+						return FindInt(nCol, var.Int64Val(0));
 
 					case AFIDataList.VARIANT_TYPE.VTYPE_FLOAT:
-						return FindInt(nCol, var.IntVal(0));
+						return FindInt(nCol, var.Int64Val(0));
 
 					case AFIDataList.VARIANT_TYPE.VTYPE_DOUBLE:
-						return FindInt(nCol, var.IntVal(0));
+						return FindInt(nCol, var.Int64Val(0));
 
 					case AFIDataList.VARIANT_TYPE.VTYPE_STRING:
-						return FindInt(nCol, var.IntVal(0));
+						return FindInt(nCol, var.Int64Val(0));
 
 					case AFIDataList.VARIANT_TYPE.VTYPE_OBJECT:
 						return FindObject(nCol, var.ObjectVal(0));
@@ -471,7 +471,7 @@ namespace AFCoreEx
 			foreach (int i in mhtRecordVec.Keys)
 			{
 				AFIDataList valueList = (AFIDataList)mhtRecordVec[i];
-				if (valueList.IntVal(nCol) == value)
+				if (valueList.Int64Val(nCol) == value)
 				{
 					return i;
 				}

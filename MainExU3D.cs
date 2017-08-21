@@ -50,9 +50,9 @@ namespace AFCoreEx
             Debug.Log(" ");
             Debug.Log(nCol);
             Debug.Log(" ");
-            Debug.Log(oldVar.IntVal(0));
+            Debug.Log(oldVar.Int64Val(0));
             Debug.Log(" ");
-            Debug.Log(newVar.IntVal(0));
+            Debug.Log(newVar.Int64Val(0));
             Debug.Log(" ");
 		}
 
@@ -62,9 +62,9 @@ namespace AFCoreEx
             Debug.Log(" ");
             Debug.Log(strProperty);
             Debug.Log(" ");
-            Debug.Log(oldVar.IntVal(0));
+            Debug.Log(oldVar.Int64Val(0));
             Debug.Log(" ");
-            Debug.Log(newVar.IntVal(0));
+            Debug.Log(newVar.Int64Val(0));
             Debug.Log(" ");
 		}
 
@@ -88,14 +88,14 @@ namespace AFCoreEx
 
 			for (int i = 0; i < 9; i +=3)
 			{
-				var.AddInt(i);
+				var.AddInt64(i);
 				var.AddFloat((float)i+1);
 				var.AddString((i+2).ToString());
 			}
 
 			for (int i = 0; i < 9; i += 3)
 			{
-				Int64 n = var.IntVal(i);
+				Int64 n = var.Int64Val(i);
 				float f = var.FloatVal(i+1);
 				string str = var.StringVal(i+2);
 				Debug.Log(n);
@@ -110,14 +110,14 @@ namespace AFCoreEx
             AFIObject gameObject = xKernel.CreateObject(ident, 0, 0, "Player", "", new AFCDataList());
 
 			AFIDataList valueProperty = new AFCDataList();
-			valueProperty.AddInt(112221);
+			valueProperty.AddInt64(112221);
 			gameObject.GetPropertyManager().AddProperty("111", valueProperty);
 			Debug.Log(gameObject.QueryPropertyInt("111"));
 
 			Debug.Log("***************AFRecord*******************");
 
 			AFIDataList valueRecord = new AFCDataList();
-			valueRecord.AddInt(0);
+			valueRecord.AddInt64(0);
 			valueRecord.AddFloat(0);
 			valueRecord.AddString("");
 			valueRecord.AddObject(ident);

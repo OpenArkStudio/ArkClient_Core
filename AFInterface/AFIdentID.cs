@@ -8,25 +8,25 @@ namespace AFCoreEx
 {
     public class AFIDENTID : Object
     {
-        public Int32 nHead64;
-        public Int32 nData64;
+        public Int32 nHead32;
+        public Int32 nData32;
 
         public AFIDENTID()
         {
-            nHead64 = 0;
-            nData64 = 0;
+            nHead32 = 0;
+            nData32 = 0;
         }
 
         public AFIDENTID(AFIDENTID id)
         {
-            nHead64 = id.nHead64;
-            nData64 = id.nData64;
+            nHead32 = id.nHead32;
+            nData32 = id.nData32;
         }
 
         public AFIDENTID(Int32 nHead, Int32 nData)
         {
-            nHead64 = nHead;
-            nData64 = nData;
+            nHead32 = nHead;
+            nData32 = nData;
         }
 
 		public static bool operator == (AFIDENTID ident, AFIDENTID other)
@@ -41,7 +41,7 @@ namespace AFCoreEx
                 return false;
             }
 
-            return ident.nHead64 == other.nHead64 && ident.nData64 == other.nData64;
+            return ident.nHead32 == other.nHead32 && ident.nData32 == other.nData32;
 		}
 
 		public static bool operator != (AFIDENTID ident, AFIDENTID other)
@@ -56,12 +56,12 @@ namespace AFCoreEx
 
         public bool IsNull()
         {
-            return 0 == nData64 && 0 == nHead64;
+            return 0 == nData32 && 0 == nHead32;
         }
 
         public override string ToString()
         {
-            return nHead64.ToString() + "-" + nData64.ToString();
+            return nHead32.ToString() + "-" + nData32.ToString();
         }
 
         public bool Parse(string strData, out AFIDENTID id)
@@ -87,8 +87,8 @@ namespace AFCoreEx
                 return false;
             }
 
-            id.nHead64 = nHead;
-            id.nData64 = nData;
+            id.nHead32 = nHead;
+            id.nData32 = nData;
 
             return true;
         }
