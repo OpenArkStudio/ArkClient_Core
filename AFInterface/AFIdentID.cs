@@ -8,8 +8,8 @@ namespace AFCoreEx
 {
     public class AFIDENTID : Object
     {
-        public Int64 nHead64;
-        public Int64 nData64;
+        public Int32 nHead64;
+        public Int32 nData64;
 
         public AFIDENTID()
         {
@@ -23,7 +23,7 @@ namespace AFCoreEx
             nData64 = id.nData64;
         }
 
-        public AFIDENTID(Int64 nHead, Int64 nData)
+        public AFIDENTID(Int32 nHead, Int32 nData)
         {
             nHead64 = nHead;
             nData64 = nData;
@@ -75,14 +75,14 @@ namespace AFCoreEx
                 return false;
             }
 
-            Int64 nHead = 0;
-            if (!Int64.TryParse(strList[0], out nHead))
+            Int32 nHead = 0;
+            if (!Int32.TryParse(strList[0], out nHead))
             {
                 return false;
             }
 
-            Int64 nData = 0;
-            if (!Int64.TryParse(strList[1], out nData))
+            Int32 nData = 0;
+            if (!Int32.TryParse(strList[1], out nData))
             {
                 return false;
             }

@@ -22,6 +22,7 @@ namespace AFCoreEx
             public Var_Data()
             {
                 mData = new Object();
+                nType = VARIANT_TYPE.VTYPE_UNKNOWN;
             }
 
             public VARIANT_TYPE nType;
@@ -33,18 +34,21 @@ namespace AFCoreEx
         public abstract bool AddDouble(double value);
         public abstract bool AddString(string value);
         public abstract bool AddObject(AFIDENTID value);
+        public abstract bool AddDataObject(ref Var_Data data);
 
         public abstract bool SetInt(int index, Int64 value);
         public abstract bool SetFloat(int index, float value);
         public abstract bool SetDouble(int index, double value);
         public abstract bool SetString(int index, string value);
         public abstract bool SetObject(int index, AFIDENTID value);
+        public abstract bool SetDataObject(int index, Var_Data value);
 
         public abstract Int64 IntVal(int index);
         public abstract float FloatVal(int index);
         public abstract double DoubleVal(int index);
         public abstract string StringVal(int index);
         public abstract AFIDENTID ObjectVal(int index);
+        public abstract Var_Data VarVal(int index);
 
 		public abstract int Count();
 		public abstract void Clear();

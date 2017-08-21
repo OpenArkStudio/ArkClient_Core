@@ -27,6 +27,8 @@ namespace AFCoreEx
 
     public abstract AFIDENTID QueryObject();
 
+    public abstract AFIDataList.Var_Data QueryDataObject();
+
 	public abstract bool SetInt(Int64 value);
 
 	public abstract bool SetFloat(float value);
@@ -35,7 +37,9 @@ namespace AFCoreEx
 
 	public abstract bool SetString(string value);
 
-	public abstract bool SetObject(AFIDENTID value);
+    public abstract bool SetObject(AFIDENTID value);
+
+    public abstract bool SetDataObject(ref AFIDataList.Var_Data data);
 
 	public abstract void RegisterCallback(PropertyEventHandler handler);
     }

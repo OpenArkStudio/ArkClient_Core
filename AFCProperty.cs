@@ -60,6 +60,11 @@ namespace AFCoreEx
             return mVarProperty.ObjectVal(0);
         }
 
+        public override AFIDataList.Var_Data QueryDataObject()
+        {
+            return mVarProperty.VarVal(0);
+        }
+
         public override bool SetInt(Int64 value)
 		{
 			if (mVarProperty.IntVal(0) != value)
@@ -158,6 +163,25 @@ namespace AFCoreEx
 
 			return true;
 		}
+
+        public override bool SetDataObject(ref AFIDataList.Var_Data value)
+        {
+            if (mVarProperty.GetType(0) != value.nType)
+            {
+                AFCDataList oldValue = new AFCDataList(mVarProperty);
+
+                mVarProperty.SetDataObject(0, value);
+
+                AFCDataList newValue = new AFCDataList(mVarProperty);
+
+                if (null != doHandleDel)
+                {
+                    doHandleDel(mSelf, msPropertyName, oldValue, newValue);
+                }
+            }
+
+            return true;
+        }
 
 		public override void RegisterCallback(PropertyEventHandler handler)
 		{

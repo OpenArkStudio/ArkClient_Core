@@ -165,6 +165,12 @@ namespace AFCoreEx
             return false;
         }
 
+        public override bool SetDataObject(int index, Var_Data value)
+        {
+            mValueObject[index] = value;
+            return true;
+        }
+
         public override Int64 IntVal(int index)
         {
             Var_Data data = GetDataObject(index);
@@ -220,6 +226,12 @@ namespace AFCoreEx
             return new AFIDENTID();
         }
 
+        public override Var_Data VarVal(int index)
+        {
+            return GetDataObject(index);
+        }
+
+
 		public override int Count()
 		{
 			return mValueObject.Count;
@@ -229,12 +241,8 @@ namespace AFCoreEx
 		{
 			mValueObject.Clear();
 		}
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="data"></param>
-		/// <returns></returns>
-        protected bool AddDataObject(ref Var_Data data)
+
+        public override bool AddDataObject(ref Var_Data data)
         {
             int nCount = mValueObject.Count;
             mValueObject.Add(nCount, data);

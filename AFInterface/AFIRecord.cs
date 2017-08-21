@@ -37,6 +37,7 @@ namespace AFCoreEx
         public abstract bool SetDouble(int nRow, int nCol, double value);
         public abstract bool SetString(int nRow, int nCol, string value);
         public abstract bool SetObject(int nRow, int nCol, AFIDENTID value);
+        public abstract bool SetDataObject(int nRow, int nCol, AFCoreEx.AFIDataList.Var_Data value);
 
         // query data
         public abstract AFIDataList QueryRow(int nRow);
@@ -47,6 +48,7 @@ namespace AFCoreEx
         public abstract double QueryDouble(int nRow, int nCol);
         public abstract string QueryString(int nRow, int nCol);
         public abstract AFIDENTID QueryObject(int nRow, int nCol);
+        public abstract AFCoreEx.AFIDataList.Var_Data QueryDataObject(int nRow, int nCol);
 
         //public abstract int FindRow( int nRow );
         public abstract int FindColValue(int nCol, AFIDataList var);

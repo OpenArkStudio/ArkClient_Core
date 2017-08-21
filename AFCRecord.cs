@@ -267,6 +267,47 @@ namespace AFCoreEx
 			return false;
         }
 
+        public override bool SetDataObject(int nRow, int nCol, AFCoreEx.AFIDataList.Var_Data value)
+        {
+            if (nRow >= 0 && nRow < mnRow)
+            {
+                if (!mhtRecordVec.ContainsKey(nRow))
+                {
+                    AddRow(nRow);
+                }
+
+                AFIDataList valueList = (AFIDataList)mhtRecordVec[nRow];
+                if (valueList.GetType(nCol) == value.nType)
+                {
+                    if (valueList.VarVal(nCol) != value)
+                    {
+                        AFCDataList oldValue = new AFCDataList();
+                        AFCoreEx.AFIDataList.Var_Data xOld = valueList.VarVal(nCol);
+                        oldValue.AddDataObject( ref xOld);
+
+                        valueList.SetDataObject(nCol, value);
+
+                        AFCDataList newValue = new AFCDataList();
+                        AFCoreEx.AFIDataList.Var_Data xNew = valueList.VarVal(nCol);
+                        newValue.AddDataObject(ref xNew);
+
+                        if (null != doHandleDel)
+                        {
+                            doHandleDel(mSelf, mstrRecordName, eRecordOptype.Updata, nRow, nCol, oldValue, newValue);
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         // query data
         public override AFIDataList QueryRow(int nRow)
         {
@@ -380,6 +421,17 @@ namespace AFCoreEx
 			}
 
             return new AFIDENTID();
+        }
+
+        public override  AFCoreEx.AFIDataList.Var_Data QueryDataObject(int nRow, int nCol)
+        {
+            AFIDataList valueList = QueryRow(nRow);
+            if (null != valueList)
+            {
+                return valueList.VarVal(nCol);
+            }
+
+            return new AFCoreEx.AFIDataList.Var_Data();
         }
 
         //public override int FindRow( int nRow );

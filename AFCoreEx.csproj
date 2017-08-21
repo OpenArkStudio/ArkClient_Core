@@ -7,8 +7,8 @@
     <ProjectGuid>{FA92ED5F-6C15-4829-A3B5-278E088D09F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NFCoreEx</RootNamespace>
-    <AssemblyName>NFCoreEx</AssemblyName>
+    <RootNamespace>AFCoreEx</RootNamespace>
+    <AssemblyName>AFCoreEx</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
