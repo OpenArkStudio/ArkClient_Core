@@ -589,6 +589,11 @@ namespace AFCoreEx
         void InitProperty(AFIDENTID self, string strClassName)
         {
             AFILogicClass xLogicClass = AFCLogicClassManager.Instance.GetElement(strClassName);
+            if (null == xLogicClass)
+            {
+                return;
+            }
+
             AFIDataList xDataList = xLogicClass.GetPropertyManager().GetPropertyList();
             for (int i = 0; i < xDataList.Count(); ++i )
             {
@@ -605,6 +610,11 @@ namespace AFCoreEx
         void InitRecord(AFIDENTID self, string strClassName)
         {
             AFILogicClass xLogicClass = AFCLogicClassManager.Instance.GetElement(strClassName);
+            if (null == xLogicClass)
+            {
+                return;
+            }
+
             AFIDataList xDataList = xLogicClass.GetRecordManager().GetRecordList();
             for (int i = 0; i < xDataList.Count(); ++i)
             {
