@@ -74,7 +74,9 @@
     <Compile Include="AFInterface\AFIPropertyManager.cs" />
     <Compile Include="AFInterface\AFIRecord.cs" />
     <Compile Include="AFInterface\AFIRecordManager.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
