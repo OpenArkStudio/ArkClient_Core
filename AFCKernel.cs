@@ -170,7 +170,7 @@ namespace AFCoreEx
                             case AFIDataList.VARIANT_TYPE.VTYPE_INT:
                                 {
                                     AFIDataList xDataList = new AFCDataList();
-                                    xDataList.AddInt(arg.IntVal(i+1));
+                                    xDataList.AddInt64(arg.Int64Val(i+1));
                                     xNewObject.GetPropertyManager().AddProperty(strPropertyName, xDataList);
                                 }
                                 break;
@@ -589,6 +589,11 @@ namespace AFCoreEx
         void InitProperty(AFIDENTID self, string strClassName)
         {
             AFILogicClass xLogicClass = AFCLogicClassManager.Instance.GetElement(strClassName);
+            if (null == xLogicClass)
+            {
+                return;
+            }
+
             AFIDataList xDataList = xLogicClass.GetPropertyManager().GetPropertyList();
             for (int i = 0; i < xDataList.Count(); ++i )
             {
@@ -605,6 +610,11 @@ namespace AFCoreEx
         void InitRecord(AFIDENTID self, string strClassName)
         {
             AFILogicClass xLogicClass = AFCLogicClassManager.Instance.GetElement(strClassName);
+            if (null == xLogicClass)
+            {
+                return;
+            }
+
             AFIDataList xDataList = xLogicClass.GetRecordManager().GetRecordList();
             for (int i = 0; i < xDataList.Count(); ++i)
             {

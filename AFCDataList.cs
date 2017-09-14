@@ -30,7 +30,7 @@ namespace AFCoreEx
 				switch (src.GetType(i))
 				{
 					case VARIANT_TYPE.VTYPE_INT:
-						AddInt(src.IntVal(i));
+						AddInt64(src.Int64Val(i));
 					break;
 					case VARIANT_TYPE.VTYPE_FLOAT:
 						AddFloat(src.FloatVal(i));
@@ -55,7 +55,7 @@ namespace AFCoreEx
         {
         }
 
-        public override bool AddInt(Int64 value)
+        public override bool AddInt64(Int64 value)
         {
             Var_Data data = new Var_Data();
             data.nType = VARIANT_TYPE.VTYPE_INT;
@@ -100,7 +100,7 @@ namespace AFCoreEx
 			return AddDataObject(ref data);
         }
 
-        public override bool SetInt(int index, Int64 value)
+        public override bool SetInt64(int index, Int64 value)
         {
             Var_Data data = GetDataObject(index);
             if (data != null && data.nType == VARIANT_TYPE.VTYPE_INT)
@@ -171,7 +171,7 @@ namespace AFCoreEx
             return true;
         }
 
-        public override Int64 IntVal(int index)
+        public override Int64 Int64Val(int index)
         {
             Var_Data data = GetDataObject(index);
             if (data != null && data.nType == VARIANT_TYPE.VTYPE_INT)

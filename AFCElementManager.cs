@@ -190,7 +190,7 @@ namespace AFCoreEx
                                 case AFIDataList.VARIANT_TYPE.VTYPE_INT:
                                     {
                                         AFIDataList xValue = new AFCDataList();
-                                        xValue.AddInt(int.Parse(xAttribute.Value));
+                                        xValue.AddInt64(int.Parse(xAttribute.Value));
                                         xElement.GetPropertyManager().AddProperty(xAttribute.Name, xValue);
                                     }
                                     break;

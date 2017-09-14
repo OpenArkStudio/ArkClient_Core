@@ -124,7 +124,7 @@ namespace AFCoreEx
 			if (null == property)
 			{
                 AFIDataList valueList = new AFCDataList();
-                valueList.AddInt(0);
+                valueList.AddInt64(0);
                 property = mPropertyManager.AddProperty(strPropertyName, valueList);
             }
 

@@ -226,7 +226,7 @@ namespace AFCoreEx
                         case "int":
                             {
                                 AFIDataList xValue = new AFCDataList();
-                                xValue.AddInt(0);
+                                xValue.AddInt64(0);
                                 xLogicClass.GetPropertyManager().AddProperty(strID.Value, xValue);
                             }
                             break;
@@ -323,7 +323,7 @@ namespace AFCoreEx
                                 {
                                     case "int":
                                         {
-                                            xValue.AddInt(0);
+                                            xValue.AddInt64(0);
                                         }
                                         break;
                                     case "float":

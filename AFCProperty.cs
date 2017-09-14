@@ -37,7 +37,7 @@ namespace AFCoreEx
 
         public override Int64 QueryInt()
         {
-            return mVarProperty.IntVal(0);
+            return mVarProperty.Int64Val(0);
         }
 
         public override float QueryFloat()
@@ -67,11 +67,11 @@ namespace AFCoreEx
 
         public override bool SetInt(Int64 value)
 		{
-			if (mVarProperty.IntVal(0) != value)
+			if (mVarProperty.Int64Val(0) != value)
 			{
 				AFCDataList oldValue = new AFCDataList(mVarProperty);
 				
-				mVarProperty.SetInt(0, value);
+				mVarProperty.SetInt64(0, value);
 
 				AFCDataList newValue = new AFCDataList(mVarProperty);
 
