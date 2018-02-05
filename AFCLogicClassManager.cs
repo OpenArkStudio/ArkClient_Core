@@ -10,7 +10,6 @@ namespace AFCoreEx
 {
     public class AFCLogicClassManager : AFILogicClassManager
     {
-        private bool mbCepher = false;
         private String mstrRootPath = null;
         #region Instance
         private static AFCLogicClassManager _Instance = null;
@@ -28,11 +27,6 @@ namespace AFCoreEx
         }
         #endregion
 
-        public bool GetCepher()
-        {
-            return mbCepher;
-        }
-
         public void LoadFromConfig(String strConfigPath)
         {
             mstrRootPath = strConfigPath;
@@ -46,42 +40,13 @@ namespace AFCoreEx
             XmlDocument xmldoc = new XmlDocument();
 
             string strLogicPath = mstrRootPath + "DataConfig/Struct/LogicClass.xml";
-            if (File.Exists(strLogicPath))
-            {
-                mbCepher = false;
-            }
-            else
-            {
-                strLogicPath = mstrRootPath + "DataConfig/Struct/LogicClass.AF";
-                mbCepher = true;
-            }
-
-            ///////////////////////////////////////////////////////////////////////////////////////
-            if (mbCepher)
-            {
-                StreamReader cepherReader = new StreamReader(strLogicPath); ;
-                string strContent = cepherReader.ReadToEnd();
-                cepherReader.Close();
-
-                byte[] data = Convert.FromBase64String(strContent);
-
-                MemoryStream stream = new MemoryStream(data);
-                XmlReader x = XmlReader.Create(stream);
-                x.MoveToContent();
-                string res = x.ReadOuterXml();
-
-                xmldoc.LoadXml(res);
-            }
-            else
-            {
-                xmldoc.Load(strLogicPath);
-            }
+            xmldoc.Load(strLogicPath);
             /////////////////////////////////////////////////////////////////
             XmlNode root = xmldoc.SelectSingleNode("XML");
 
             LoadLogicClass(root);
-            LoadLogicClassProperty();
-            LoadLogicClassRecord();
+            LoadLogicClassDataNodes();
+            LoadLogicClassDataTables();
 
             return false;
         }
@@ -155,12 +120,12 @@ namespace AFCoreEx
             mhtObject.Clear();
         }
 
-        private void LoadLogicClassProperty()
+        private void LoadLogicClassDataNodes()
         {
             Dictionary<string, AFILogicClass> xTable = AFCLogicClassManager.Instance.GetElementList();
             foreach (KeyValuePair<string, AFILogicClass> kv in xTable)
             {
-                LoadLogicClassProperty((string)kv.Key);
+                LoadLogicClassDataNodes((string)kv.Key);
             }
 
             //再为每个类加载iobject的属性
@@ -173,48 +138,28 @@ namespace AFCoreEx
             }
         }
 
-        private void LoadLogicClassRecord()
+        private void LoadLogicClassDataTables()
         {
             Dictionary<string, AFILogicClass> xTable = AFCLogicClassManager.Instance.GetElementList();
             foreach (KeyValuePair<string, AFILogicClass> kv in xTable)
             {
-                LoadLogicClassRecord(kv.Key);
+                LoadLogicClassDataTables(kv.Key);
             }
         }
 
-        private void LoadLogicClassProperty(string strName)
+        private void LoadLogicClassDataNodes(string strName)
         {
             AFILogicClass xLogicClass = GetElement(strName);
             if (null != xLogicClass)
             {
                 string strLogicPath = mstrRootPath + xLogicClass.GetPath();
-
                 XmlDocument xmldoc = new XmlDocument();
-                ///////////////////////////////////////////////////////////////////////////////////////
-                if (mbCepher)
-                {
-                    StreamReader cepherReader = new StreamReader(strLogicPath); ;
-                    string strContent = cepherReader.ReadToEnd();
-                    cepherReader.Close();
-
-                    byte[] data = Convert.FromBase64String(strContent);
-
-                    MemoryStream stream = new MemoryStream(data);
-                    XmlReader x = XmlReader.Create(stream);
-                    x.MoveToContent();
-                    string res = x.ReadOuterXml();
-
-                    xmldoc.LoadXml(res);
-                }
-                else
-                {
-                    xmldoc.Load(strLogicPath);
-                }
+                xmldoc.Load(strLogicPath);
                 /////////////////////////////////////////////////////////////////
 
                 XmlNode xRoot = xmldoc.SelectSingleNode("XML");
-                XmlNode xNodePropertys = xRoot.SelectSingleNode("Propertys");
-                XmlNodeList xNodeList = xNodePropertys.SelectNodes("Property");
+                XmlNode xNodePropertys = xRoot.SelectSingleNode("DataNodes");
+                XmlNodeList xNodeList = xNodePropertys.SelectNodes("DataNode");
                 for (int i = 0; i < xNodeList.Count; ++i)
                 {
                     XmlNode xPropertyNode = xNodeList.Item(i);
@@ -266,7 +211,7 @@ namespace AFCoreEx
             }
         }
 
-        private void LoadLogicClassRecord(string strName)
+        private void LoadLogicClassDataTables(string strName)
         {
             AFILogicClass xLogicClass = GetElement(strName);
             if (null != xLogicClass)
@@ -274,32 +219,13 @@ namespace AFCoreEx
                 string strLogicPath = mstrRootPath + xLogicClass.GetPath();
 
                 XmlDocument xmldoc = new XmlDocument();
-                ///////////////////////////////////////////////////////////////////////////////////////
-                if (mbCepher)
-                {
-                    StreamReader cepherReader = new StreamReader(strLogicPath); ;
-                    string strContent = cepherReader.ReadToEnd();
-                    cepherReader.Close();
-
-                    byte[] data = Convert.FromBase64String(strContent);
-
-                    MemoryStream stream = new MemoryStream(data);
-                    XmlReader x = XmlReader.Create(stream);
-                    x.MoveToContent();
-                    string res = x.ReadOuterXml();
-
-                    xmldoc.LoadXml(res);
-                }
-                else
-                {
-                    xmldoc.Load(strLogicPath);
-                }
+                xmldoc.Load(strLogicPath);
                 /////////////////////////////////////////////////////////////////
                 XmlNode xRoot = xmldoc.SelectSingleNode("XML");
-                XmlNode xNodePropertys = xRoot.SelectSingleNode("Records");
+                XmlNode xNodePropertys = xRoot.SelectSingleNode("DataTables");
                 if (null != xNodePropertys)
                 {
-                    XmlNodeList xNodeList = xNodePropertys.SelectNodes("Record");
+                    XmlNodeList xNodeList = xNodePropertys.SelectNodes("DataTable");
                     if (null != xNodeList)
                     {
                         for (int i = 0; i < xNodeList.Count; ++i)

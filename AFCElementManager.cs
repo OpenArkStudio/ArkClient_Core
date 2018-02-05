@@ -136,31 +136,12 @@ namespace AFCoreEx
             strLogicPath += xLogicClass.GetInstance();
 
             XmlDocument xmldoc = new XmlDocument();
-            ///////////////////////////////////////////////////////////////////////////////////////
-            if (AFCLogicClassManager.Instance.GetCepher())
-            {
-                StreamReader cepherReader = new StreamReader(strLogicPath); ;
-                string strContent = cepherReader.ReadToEnd();
-                cepherReader.Close();
-
-                byte[] data = Convert.FromBase64String(strContent);
-
-                MemoryStream stream = new MemoryStream(data);
-                XmlReader x = XmlReader.Create(stream);
-                x.MoveToContent();
-                string res = x.ReadOuterXml();
-
-                xmldoc.LoadXml(res);
-            }
-            else
-            {
-                xmldoc.Load(strLogicPath);
-            }
+            xmldoc.Load(strLogicPath);
             /////////////////////////////////////////////////////////////////
 
             XmlNode xRoot = xmldoc.SelectSingleNode("XML");
 
-            XmlNodeList xNodeList = xRoot.SelectNodes("Object");
+            XmlNodeList xNodeList = xRoot.SelectNodes("Entry");
             for (int i = 0; i < xNodeList.Count; ++i)
             {
                 //AFCLog.Instance.Log("Class:" + xLogicClass.GetName());
